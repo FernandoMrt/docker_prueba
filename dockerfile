@@ -34,8 +34,8 @@ RUN wget "https://raw.githubusercontent.com/digination/dirbuster-ng/master/wordl
 WORKDIR /
 
 # Instalacion del SCRIPT
-#COPY ejecucion.sh /
-#ENTRYPOINT [ "/ejecucion.sh" ]
+COPY ejecucion.sh /
+ENTRYPOINT [ "/ejecucion.sh" ]
 
 
 
