@@ -1,47 +1,27 @@
+# SO Ubuntu
 FROM ubuntu
 
 EXPOSE 4444
 
-#instalacion librerias y programas necesarios:
+# Instalacion de bibliotecas y programas necesarios
 RUN apt-get update && \ 
-	apt-get install perl ca-certificates sudo nmap python3 python3-pip wget zip httrack net-tools -y
+	apt-get install perl ca-certificates sudo nmap python3 python3-pip wget zip nikto net-tools gobuster git -y
 
-#instalacion de sslyze
-RUN apt-get update
+# Instalacion de SSLYZE
 RUN pip install --upgrade setuptools pip
 RUN pip install --upgrade sslyze
 
-#direcctorio de archivos de salida
-RUN mkdir salidas
+# Directorio de archivos de salida
+RUN mkdir resultados
 
-#instalacion de nmap
-RUN apt-get update && apt-get install nmap -y 
-
-#creacion archivo de saldida nmap
-
-RUN touch /salidas/salidanmap.txt
-
-#instalacion de nikto
-RUN apt-get install nikto -y
-
-#instalacion de gobuster
-RUN apt-get install gobuster
-
-#Diccionario
+# Diccionario de directorios
 RUN mkdir /diccionario
-WORKDIR /diccionario
-RUN wget "https://raw.githubusercontent.com/digination/dirbuster-ng/master/wordlists/common.txt"
-WORKDIR /
+RUN wget "https://raw.githubusercontent.com/digination/dirbuster-ng/master/wordlists/common.txt" -O common.txt
+
+# Instalacion del Web-Crawler Photon
+RUN git clone https://github.com/s0md3v/Photon.git
+RUN pip3 install -r ./Photon/requirements.txt
 
 # Instalacion del SCRIPT
 COPY ejecucion.sh /
 ENTRYPOINT [ "/ejecucion.sh" ]
-
-
-
-
-
-
-
-
-
